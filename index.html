@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Abdulrahman Saad Motion</title>
+<style>
+  /* Abdulrahman Saad — brand identity: warm ink + gold, Thmanyah type, calm editorial motion (no glow, no gradients) */
+  @font-face { font-family: "Thmanyah Sans"; font-weight: 400; src: local("Thmanyah Sans Regular"), url("fonts/thmanyah-sans-Regular.woff2") format("woff2"); }
+  @font-face { font-family: "Thmanyah Sans"; font-weight: 500; src: local("Thmanyah Sans Medium"), url("fonts/thmanyah-sans-Medium.woff2") format("woff2"); }
+  @font-face { font-family: "Thmanyah Sans"; font-weight: 700; src: local("Thmanyah Sans Bold"), url("fonts/thmanyah-sans-Bold.woff2") format("woff2"); }
+  @font-face { font-family: "Thmanyah Serif Display"; font-weight: 500; src: local("Thmanyah Serif Display Medium"), url("fonts/thmanyah-serif-display-Medium.woff2") format("woff2"); }
+  @font-face { font-family: "Thmanyah Serif Display"; font-weight: 700; src: local("Thmanyah Serif Display Bold"), url("fonts/thmanyah-serif-display-Bold.woff2") format("woff2"); }
+  /* English display (the name only): taken from this computer, or from panel/fonts when the file is put there */
+  @font-face { font-family: "AS Camel"; src: local("The Year of The Camel"), local("TheYearofTheCamel-Regular"), local("The Year of The Camel Regular"),
+    url("fonts/the-year-of-the-camel.woff2") format("woff2"), url("fonts/the-year-of-the-camel.ttf") format("truetype"), url("fonts/the-year-of-the-camel.otf") format("opentype"); }
+
+  :root {
+    --dark: #1A150D; --dark-2: #241D13; --ink: #2B2214; --ink-2: #352A19;
+    --gold: #B0864A; --gold-1: #8B6B2E; --gold-3: #D4AF6A; --gold-lt: #E9C888;
+    --cream: #FDFBF6; --cream-2: #F2E4C2; --muted: #A3937A; --muted-2: #7A6A4E;
+    --bg: var(--dark); --surface: var(--dark-2); --surface-2: var(--ink); --surface-3: var(--ink-2);
+    --line: rgba(242,228,194,.08); --line-2: rgba(242,228,194,.15);
+    --text: var(--cream); --faint: var(--muted-2);
+    --accent: var(--gold-3); --accent-dim: rgba(212,175,106,.12); --accent-line: rgba(212,175,106,.38);
+    --on-accent: var(--dark); --err: #D9735B; --err-dim: rgba(217,115,91,.12);
+    --ease: cubic-bezier(.16,1,.3,1);
+    --r: 12px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 400 13px/1.7 "Thmanyah Sans", "Segoe UI", Tahoma, sans-serif; -webkit-font-smoothing: antialiased; }
+  body { display: flex; flex-direction: column; overflow: hidden; }
+  svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  .latin { font-family: "Thmanyah Sans", "Segoe UI", sans-serif; direction: ltr; unicode-bidi: isolate; }
+  .caps { font-weight: 500; font-size: 9.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--muted); direction: ltr; unicode-bidi: isolate; }
+
+  /* ---------- header */
+  header { position: relative; z-index: 3; display: flex; align-items: center; padding: 10px 12px; background: var(--dark); border-bottom: 1px solid var(--line); }
+  header > * + * { margin-inline-start: 8px; }
+  .logo { width: 28px; height: 28px; flex: none; display: block; }
+  .logo svg { width: 28px; height: 28px; stroke: none; }
+  .brand { display: flex; flex-direction: column; line-height: 1.05; direction: ltr; text-align: left; flex: none; margin-inline-start: 10px !important; }
+  .brand .name { font: 400 15px/1.1 "AS Camel", "Thmanyah Serif Display", Georgia, serif; color: var(--cream); white-space: nowrap; }
+  .brand .caps { font-size: 8.5px; letter-spacing: .3em; margin-top: 3px; color: var(--gold-3); }
+  .pill { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 999px; max-width: 150px; min-width: 0;
+    background: var(--surface-2); border: 1px solid var(--line-2); color: var(--cream-2); font-size: 11px; font-weight: 500; white-space: nowrap; overflow: hidden; }
+  .pill > * + * { margin-inline-start: 6px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--faint); flex: none; transition: background .3s var(--ease); }
+  .dot.ok { background: var(--gold-3); }
+  .dot.busy { background: var(--gold-lt); animation: pulse 1.2s var(--ease) infinite; }
+  .dot.bad { background: var(--err); }
+  #skillPill { cursor: pointer; flex-shrink: 1; }
+  #skillPill.none { color: var(--gold-lt); border-color: var(--accent-line); }
+  #skillPill span { overflow: hidden; text-overflow: ellipsis; }
+  @keyframes pulse { 50% { opacity: .35; } }
+  .spacer { flex: 1; }
+  .icon-btn { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; color: var(--muted); transition: background .3s var(--ease), color .3s var(--ease); }
+  .icon-btn:hover { background: var(--surface-2); color: var(--cream); }
+  .icon-btn.active { background: var(--accent-dim); color: var(--gold-3); }
+
+  /* ---------- settings sheet */
+  #settings { position: absolute; z-index: 2; left: 10px; right: 10px; top: 54px; display: none; flex-direction: column;
+    padding: 14px; border-radius: var(--r); background: var(--dark-2); border: 1px solid var(--line-2);
+    box-shadow: 0 18px 40px rgba(10,8,4,.5); max-height: calc(100% - 66px); overflow-y: auto; }
+  #settings > * + * { margin-top: 10px; }
+  #settings.open { display: flex; animation: drop .45s var(--ease) both; }
+  @keyframes drop { from { opacity: 0; transform: translateY(-8px); } }
+  .field { display: flex; flex-direction: column; }
+  .field > span { color: var(--muted); font-size: 11.5px; margin-bottom: 5px; }
+  .input { width: 100%; font: inherit; color: var(--text); background: var(--dark); border: 1px solid var(--line-2); border-radius: 10px; padding: 7px 10px; }
+  .input:focus { outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-dim); }
+  select.input option { background: var(--dark-2); color: var(--text); }
+  .row-in { display: flex; }
+  .row-in > * + * { margin-inline-start: 6px; }
+  .row-in .input { flex: 1; }
+  #newSkillRow { display: none; }
+  #newSkillRow.show { display: flex; }
+  #importRow { display: none; flex-direction: column; }
+  #importRow > * + * { margin-top: 6px; }
+  #importRow.show { display: flex; }
+  #importRow .btn { flex: 1; }
+  select.input optgroup { background: var(--dark-2); color: var(--muted); font-style: normal; }
+  .hint { color: var(--faint); font-size: 10.5px; word-break: break-all; }
+  .actions { display: flex; flex-wrap: wrap; }
+  .actions > * { margin-inline-end: 8px; }
+  .btn { height: 32px; padding: 0 14px; border-radius: 10px; font-weight: 700; background: var(--surface-3); border: 1px solid var(--line-2); white-space: nowrap; transition: background .3s var(--ease); }
+  .btn:hover { background: #42341F; }
+  .btn.primary { background: var(--gold-3); color: var(--on-accent); border-color: transparent; }
+  .btn.primary:hover { background: var(--gold-lt); }
+
+  /* ---------- conversation */
+  #messages { flex: 1; overflow-y: auto; padding: 16px 12px 8px; display: flex; flex-direction: column; scroll-behavior: smooth; }
+  #messages > * + * { margin-top: 12px; }
+  #messages::-webkit-scrollbar { width: 8px; } #messages::-webkit-scrollbar-thumb { background: var(--ink-2); border-radius: 8px; border: 2px solid var(--bg); }
+  .row { display: flex; align-items: flex-start; animation: rise .3s var(--ease); }
+  .row > * + * { margin-inline-start: 9px; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+  .avatar { width: 24px; height: 24px; flex: none; margin-top: 2px; display: block; }
+  .avatar svg { width: 24px; height: 24px; stroke: none; }
+  .msg { white-space: pre-wrap; word-wrap: break-word; min-width: 0; }
+  .msg.claude { flex: 1; padding-top: 2px; color: var(--cream); }
+  .msg.user { max-width: 88%; margin-inline-start: auto; padding: 8px 12px; border-radius: 12px 12px 4px 12px;
+    background: var(--ink); border: 1px solid var(--accent-line); color: var(--cream); }
+  .msg.err { align-self: stretch; padding: 9px 12px; border-radius: 12px; background: var(--err-dim); border: 1px solid rgba(217,115,91,.35); color: #F3CDBF; }
+  .msg b { color: var(--gold-lt); font-weight: 700; }
+  .msg code { font-family: Consolas, "Cascadia Code", Menlo, monospace; font-size: 12px; background: rgba(242,228,194,.07); padding: 1px 5px; border-radius: 5px; direction: ltr; unicode-bidi: isolate; }
+  .msg pre { direction: ltr; text-align: left; background: #120E08; border: 1px solid var(--line); padding: 10px 12px; border-radius: 10px; overflow-x: auto; margin: 6px 0; white-space: pre; }
+  .msg pre code { background: none; padding: 0; }
+  .cursor::after { content: ""; display: inline-block; width: 7px; height: 14px; margin-inline-start: 3px; vertical-align: -2px; border-radius: 2px; background: var(--gold-3); animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* tool activity chips */
+  .chip { align-self: flex-start; margin-inline-start: 33px; display: inline-flex; align-items: center; max-width: calc(100% - 33px);
+    padding: 4px 10px 4px 9px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--muted); font-size: 11.5px; animation: rise .3s var(--ease); }
+  .chip > * + * { margin-inline-start: 7px; }
+  .chip .txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .chip .ico { width: 13px; height: 13px; border-radius: 50%; flex: none; display: grid; place-items: center; }
+  .chip.running .ico { border: 2px solid var(--surface-3); border-top-color: var(--gold-3); animation: spin .8s linear infinite; }
+  .chip.done { color: var(--cream-2); } .chip.done .ico { background: var(--gold-3); color: var(--on-accent); }
+  .chip.done .ico::before { content: "✓"; font-size: 9px; font-weight: 700; }
+  .chip.error { color: #F3CDBF; border-color: rgba(217,115,91,.3); background: var(--err-dim); } .chip.error .ico { background: var(--err); color: var(--dark); }
+  .chip.error .ico::before { content: "!"; font-size: 9px; font-weight: 700; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* typing indicator */
+  .typing { margin-inline-start: 33px; display: inline-flex; padding: 6px 2px; }
+  .typing i { width: 6px; height: 6px; margin-inline-end: 4px; border-radius: 50%; background: var(--gold-3); opacity: .3; animation: hop 1.2s var(--ease) infinite; }
+  .typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+  @keyframes hop { 30% { opacity: 1; transform: translateY(-4px); } 60% { opacity: .3; transform: none; } }
+
+  /* welcome: kicker + title (second line in gold, ends with a period) */
+  .welcome { margin: auto 0; padding: 18px 4px 6px; display: flex; flex-direction: column; animation: rise .45s var(--ease); }
+  .welcome > * + * { margin-top: 12px; }
+  .kicker { display: flex; align-items: center; }
+  .kicker i { width: 22px; height: 1px; background: var(--gold-3); margin-inline-end: 8px; }
+  .welcome .big { font: 700 21px/1.35 "Thmanyah Serif Display", "Thmanyah Sans", serif; color: var(--cream); }
+  .welcome .big em { display: block; font-style: normal; font-weight: 500; color: var(--gold-3); }
+  .welcome .sub { color: var(--muted); font-size: 12px; }
+  .welcome .sub b { color: var(--cream-2); }
+  .suggest { display: flex; flex-direction: column; }
+  .suggest > * + * { margin-top: 7px; }
+  .suggest button { text-align: start; padding: 9px 12px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); color: var(--cream);
+    transition: border-color .3s var(--ease), background .3s var(--ease), transform .3s var(--ease); }
+  .suggest button:hover { border-color: var(--accent-line); background: var(--surface-2); transform: translateX(-3px); }
+
+  /* what Claude is looking at */
+  .shot { margin-inline-start: 33px; max-width: calc(100% - 33px); animation: rise .3s var(--ease); }
+  .shot img { width: 100%; max-height: 220px; object-fit: contain; object-position: right; border-radius: 10px; border: 1px solid var(--accent-line); background: var(--dark-2); cursor: zoom-in; display: block; }
+  .shot.big img { max-height: none; cursor: zoom-out; }
+  .shot .cap { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* ---------- composer */
+  footer { padding: 8px 10px 10px; background: var(--bg); border-top: 1px solid var(--line); }
+  .composer { border-radius: 14px; background: var(--surface); border: 1px solid var(--line-2); transition: border-color .3s var(--ease), box-shadow .3s var(--ease); }
+  .composer:focus-within { border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-dim); }
+  textarea { display: block; width: 100%; min-height: 44px; max-height: 180px; resize: none; font: inherit; color: var(--text);
+    background: transparent; border: 0; padding: 11px 13px 4px; }
+  textarea:focus { outline: none; } textarea::placeholder { color: var(--faint); }
+  .tools { display: flex; flex-wrap: wrap; align-items: center; padding: 6px 8px 8px; }
+  .tools > * { margin-inline-end: 6px; margin-top: 2px; margin-bottom: 2px; }
+  .tools > #send { margin-inline-end: 0; }
+  .toggle { display: inline-flex; align-items: center; height: 28px; padding: 0 10px; border-radius: 999px; cursor: pointer; user-select: none; white-space: nowrap;
+    background: var(--surface-2); border: 1px solid var(--line); color: var(--muted); font-size: 11.5px; transition: all .3s var(--ease); }
+  .toggle svg { margin-inline-end: 5px; }
+  .toggle:hover { color: var(--cream); }
+  .toggle input { display: none; }
+  .toggle.on { background: var(--accent-dim); border-color: var(--accent-line); color: var(--gold-3); }
+  #learnBtn:hover { background: var(--accent-dim); border-color: var(--accent-line); color: var(--gold-3); }
+  .select-wrap { position: relative; display: inline-flex; align-items: center; height: 28px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); color: var(--muted); padding-inline-start: 9px; }
+  .select-wrap.on { background: var(--accent-dim); border-color: var(--accent-line); color: var(--gold-3); }
+  .select-wrap svg { width: 13px; height: 13px; }
+  .select-wrap select { appearance: none; -webkit-appearance: none; font: inherit; font-size: 11.5px; color: inherit; background: transparent; border: 0; padding: 0 8px 0 10px; height: 26px; cursor: pointer; direction: ltr; }
+  .select-wrap select:focus { outline: none; }
+  .select-wrap select option { background: var(--dark-2); color: var(--text); }
+  .mini { width: 28px; height: 28px; border-radius: 999px; display: grid; place-items: center; color: var(--faint); }
+  .mini:hover { background: var(--surface-2); color: var(--cream); }
+  .mini svg { width: 14px; height: 14px; }
+  #send { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--gold-3); color: var(--on-accent); flex: none;
+    transition: transform .3s var(--ease), background .3s var(--ease); }
+  #send:hover { background: var(--gold-lt); transform: translateY(-1px); }
+  #send svg { stroke-width: 2.4; }
+  #send.stop { background: var(--err); color: var(--dark); }
+  .statusline { display: flex; align-items: center; padding: 6px 4px 0; color: var(--faint); font-size: 11px; }
+  .statusline > * + * { margin-inline-start: 6px; }
+
+  /* reference images */
+  #attachments { display: none; flex-wrap: wrap; padding: 10px 12px 0; }
+  #attachments.has { display: flex; }
+  .att { position: relative; width: 58px; height: 58px; margin-inline-end: 8px; margin-bottom: 4px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line-2); background: var(--dark); animation: rise .3s var(--ease); }
+  .att img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .att button { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(26,21,13,.8); color: var(--cream); font-size: 11px; line-height: 1; }
+  .att button:hover { background: var(--err); }
+  .thumbs { display: flex; flex-wrap: wrap; margin-bottom: 6px; }
+  .thumbs img { max-width: 120px; max-height: 120px; margin-inline-end: 6px; margin-bottom: 4px; border-radius: 8px; border: 1px solid var(--accent-line); display: block; }
+  #drop { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9; display: none; place-items: center; background: rgba(26,21,13,.88); border: 2px dashed var(--gold-3);
+    border-radius: 14px; margin: 6px; color: var(--gold-3); font-size: 15px; font-weight: 700; pointer-events: none; }
+  #drop.show { display: grid; }
+</style>
+</head>
+<body>
+  <header>
+    <span class="logo" title="Abdulrahman Saad"><svg viewBox="18 8 102 104" aria-hidden="true"><polygon points="30,20 55.97,34.84 63.35,80.94 30,100" fill="#B0864A"/><polygon points="62.97,34.84 107,60 70.35,80.94" fill="#D4AF6A"/></svg></span>
+    <span class="brand"><span class="name">Abdulrahman Saad</span><span class="caps">Motion</span></span>
+    <span class="spacer"></span>
+    <button class="pill" id="skillPill" title="السكيل اللي البانل بتتعلم فيها وبتشتغل بيها (دوس للإعدادات)"><svg viewBox="0 0 24 24" style="width:12px;height:12px"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5Z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg><span class="latin" id="skillName">…</span></button>
+    <button class="icon-btn" id="newChat" title="محادثة جديدة"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+    <button class="icon-btn" id="settingsBtn" title="الإعدادات"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg></button>
+  </header>
+
+  <div id="settings">
+    <label class="field"><span>فولدر الشغل (الميموري والسكيل والريفرنسات بتتحفظ فيه)</span>
+      <div class="row-in"><input class="input latin" id="cwd" style="text-align:left"><button class="btn" id="openFolder">افتح</button></div></label>
+    <label class="field"><span>السكيل (اللي Claude بيتعلم فيها وبيشتغل بيها)</span>
+      <select class="input" id="skillSel"></select></label>
+    <div class="row-in" id="newSkillRow"><input class="input latin" id="newSkill" placeholder="my-motion" style="text-align:left"><button class="btn primary" id="createSkill">اعمل السكيل</button></div>
+    <div id="importRow">
+      <div class="row-in"><button class="btn primary" id="importZip">📦 من ملف ZIP</button><button class="btn" id="importDir">📁 من فولدر</button></div>
+      <div class="hint">أو اسحب ملف السكيل (.zip) وارميه على البانل في أي وقت.</div>
+    </div>
+    <button class="btn" id="exportSkill" title="اعمل ملف ZIP من السكيل المربوطة علشان تديه لحد تاني">📤 صدّر السكيل (ZIP) علشان تديها لحد</button>
+    <input type="file" id="zipPick" accept=".zip,.skill" style="display:none">
+    <input type="file" id="dirPick" webkitdirectory style="display:none">
+    <label class="field"><span>الموديل</span>
+      <select class="input" id="model">
+        <option value="">الافتراضي في اشتراكك</option>
+        <option value="opus">Opus</option>
+        <option value="sonnet">Sonnet</option>
+      </select></label>
+    <div class="hint latin" id="exeHint"></div>
+    <div class="actions">
+      <button class="btn primary" id="saveSettings">حفظ</button>
+      <button class="btn" id="loginBtn" title="سجّل دخول بحساب Claude بتاعك (ولو انت متسجّل، بيقولك بأنهي حساب)">تسجيل الدخول</button>
+    </div>
+  </div>
+
+  <div id="messages"></div>
+
+  <footer>
+    <div class="composer">
+      <div id="attachments"></div>
+      <textarea id="input" rows="1" placeholder="اكتب لـ Claude…  (Enter للإرسال · Shift+Enter لسطر جديد · Ctrl+V لصورة)"></textarea>
+      <div class="tools">
+        <button class="mini" id="attachBtn" title="ابعت صورة ريفرنس"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></button>
+        <input type="file" id="filePick" accept="image/png,image/jpeg,image/webp,image/gif" multiple style="display:none">
+        <label class="toggle" id="shotWrap" title="ابعت لـ Claude صورة من الكومب المفتوح عند مكان مؤشر الوقت">
+          <input type="checkbox" id="shot">
+          <svg viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13" r="3.5"/></svg>صورة الكومب
+        </label>
+        <button class="toggle" id="learnBtn" title="اختار اللايرز اللي عليها الأنيميشن في التايملاين ودوس هنا: Claude يقراها ويحفظها في السكيل. (لو كتبت اسم للأنيميشن في المربع هيتحفظ بيه)">
+          <svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>اتعلّم الأنيميشن
+        </button>
+        <span class="select-wrap" id="effortWrap" title="مستوى التفكير: كل ما يعلى، Claude بيفكر أكتر والشغل بيطلع أحسن، بس بياخد وقت أطول وبيستهلك من الليمت أكتر">
+          <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7Z"/></svg>
+          <select id="effort">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="xhigh">X-High</option>
+            <option value="max">Max</option>
+          </select>
+        </span>
+        <span class="spacer"></span>
+        <button id="send" title="ابعت"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
+      </div>
+    </div>
+    <div class="statusline"><span class="dot" id="dot"></span><span id="status">بيجهّز…</span></div>
+  </footer>
+
+  <div id="drop">ارمي صورة الريفرنس أو ملف السكيل (.zip) هنا</div>
+  <script src="main.js"></script>
+</body>
+</html>
